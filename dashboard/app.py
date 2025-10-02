@@ -197,49 +197,6 @@ else:
         )
         st.plotly_chart(fig_pred, use_container_width=True, config={"displayModeBar": False})
 
-# ------------------- ACURÁCIA DO MODELO -------------------
-st.markdown("---")
-st.subheader("🎯 Acurácia das Previsões")
-
-if pred_log.empty or sub_df.empty:
-    st.info("Nenhum dado suficiente para calcular acurácia ainda.")
-else:
-    pl = pred_log[pred_log['moeda'] == selected_symbol].copy()
-    real = sub_df[['timestamp', 'price_usd']].rename(columns={"timestamp": "horario_real"})
-
-    # merge aproximado (nearest join)
-    df_merge = pd.merge_asof(
-        pl.sort_values("horario"),
-        real.sort_values("horario_real"),
-        left_on="horario", right_on="horario_real",
-        direction="backward", tolerance=pd.Timedelta("10min")  # aceita até 10 min de diferença
-    )
-
-    df_merge = df_merge.dropna(subset=["price_usd"])
-    if df_merge.empty:
-        st.info("Ainda não é possível comparar previsões com valores reais.")
-    else:
-        df_merge["erro_absoluto"] = df_merge["previsao_proxima_hora"] - df_merge["price_usd"]
-        df_merge["erro_percentual"] = df_merge["erro_absoluto"] / df_merge["price_usd"]
-
-        st.write(df_merge[["horario", "price_usd", "previsao_proxima_hora", "erro_absoluto", "erro_percentual"]].tail())
-
-        fig_acc = go.Figure()
-        fig_acc.add_trace(go.Bar(
-            x=df_merge["horario"], y=df_merge["erro_absoluto"],
-            name="Erro Absoluto (USD)", marker_color="red",
-            hovertemplate="Tempo: %{x}<br>Erro: %{y:.2f} USD"
-        ))
-        st.plotly_chart(fig_acc, use_container_width=True, config={"displayModeBar": False})
-
-        fig_acc_pct = go.Figure()
-        fig_acc_pct.add_trace(go.Bar(
-            x=df_merge["horario"], y=df_merge["erro_percentual"] * 100,
-            name="Erro Percentual (%)", marker_color="orange",
-            hovertemplate="Tempo: %{x}<br>Erro: %{y:.2f}%"
-        ))
-        st.plotly_chart(fig_acc_pct, use_container_width=True, config={"displayModeBar": False})
-
 # ------------------- COMPARATIVO ENTRE MOEDAS -------------------
 st.markdown("---")
 st.subheader("🌍 Comparativo entre Moedas (preço real)")

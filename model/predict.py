@@ -17,7 +17,7 @@ def predict(symbol: str):
 
     df = pd.read_parquet(FEATURE_PATH)
 
-    # garante que timestamp é datetime com timezone correto
+    # garante timezone correto
     df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True, errors="coerce").dt.tz_convert("America/Sao_Paulo")
 
     if symbol not in df["symbol"].unique():
@@ -32,7 +32,7 @@ def predict(symbol: str):
     modelo = joblib.load(model_path)
     mais_recente = df[df["symbol"] == symbol].sort_values("timestamp").iloc[-1]
 
-    # prepara dataframe com as features esperadas
+    # prepara features
     features_df = pd.DataFrame([[
         mais_recente["price_usd"],
         mais_recente["price_ma_3"],
@@ -41,8 +41,6 @@ def predict(symbol: str):
     ]], columns=FEATURES)
 
     previsao = modelo.predict(features_df)[0]
-
-    # define timestamp da previsão como 1h à frente do último dado real
     ts_futuro = mais_recente["timestamp"] + timedelta(hours=1)
 
     registro = {
@@ -54,29 +52,40 @@ def predict(symbol: str):
 
     novo = pd.DataFrame([registro])
 
-    # concatena com histórico anterior, removendo duplicados e valores inválidos
+    # Se já existe log, verifica se previsão desse horário já está salva
     if os.path.exists(PRED_LOG_PATH):
         antigo = pd.read_parquet(PRED_LOG_PATH)
+
+        # remove duplicatas com base em horário e moeda
         combinado = pd.concat([antigo, novo], ignore_index=True)
+        combinado = combinado.drop_duplicates(subset=["horario", "moeda"], keep="last")
     else:
         combinado = novo
 
-    # remove duplicatas, NaN e valores infinitos
+    # limpeza final
     combinado = combinado.replace([np.inf, -np.inf], np.nan).dropna()
-    combinado = combinado.drop_duplicates(subset=["horario", "moeda"], keep="last")
 
-    # salva no parquet
+    # salva atualizado
     combinado.to_parquet(PRED_LOG_PATH, index=False)
 
-    # log no terminal
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] ✅ Previsão para {symbol.upper()}:")
+    # log terminal
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] ✅ Previsão registrada para {symbol.upper()}:")
     print(f"   Preço atual = {mais_recente['price_usd']:.2f}")
     print(f"   Previsão para {ts_futuro.strftime('%d/%m %H:%M')} = {previsao:.2f}\n")
 
     return registro
 
 
+def run_all():
+    """Roda previsões para todas as moedas disponíveis no dataset"""
+    if not os.path.exists(FEATURE_PATH):
+        print("⚠️ Nenhum dado processado encontrado.")
+        return
+
+    df = pd.read_parquet(FEATURE_PATH)
+    for symbol in df["symbol"].unique():
+        predict(symbol)
+
+
 if __name__ == "__main__":
-    # Testes manuais
-    for moeda in ["btc", "eth", "ada", "xrp", "ltc", "sol"]:
-        predict(moeda)
+    run_all()
