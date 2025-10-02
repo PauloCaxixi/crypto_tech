@@ -1,215 +1,113 @@
-📊 CryptoTech – Previsão de Criptomoedas com IA
+📖 README.md
 
-Este projeto é um pipeline completo de previsão de preços de criptomoedas utilizando ETL + Machine Learning + API + Dashboard.
+Explicação de como rodar o projeto do zero:
 
-Ele coleta preços de criptomoedas em tempo real via CoinGecko, processa os dados, treina modelos de Machine Learning (Random Forest), gera previsões para 1 hora à frente e disponibiliza:
+# 🚀 Crypto Forecasting Pipeline
 
-✅ API REST (FastAPI) para consultas
+Este projeto implementa um **pipeline de coleta, processamento, treinamento e previsão de preços de criptomoedas**, com visualização em tempo real via **Dashboard (Streamlit)** e uma **API (FastAPI)**.
 
-✅ Dashboard interativo (Streamlit) para visualização
+---
 
-✅ Atualizações automáticas a cada 30 segundos
+## ⚙️ Estrutura do Projeto
 
-📂 Estrutura do Projeto
-crypto_tech/
-│── api/
-│   └── main.py              # API FastAPI (endpoints de previsão e histórico)
-│
-│── dashboard/
-│   └── app.py               # Dashboard Streamlit
-│
-│── etl/
-│   ├── extract.py           # Coleta preços das criptomoedas (CoinGecko → SQLite)
-│   └── transform.py         # Gera features para ML (médias móveis, variação % etc.)
-│
-│── model/
-│   ├── train.py             # Treinamento dos modelos de ML
-│   └── predict.py           # Geração de previsões automáticas
-│
-│── data/
-│   ├── crypto.db            # Banco SQLite com preços crus
-│   ├── processed/
-│   │   ├── crypto_features.parquet   # Features processadas para treino
-│   │   └── predictions_log.parquet   # Histórico de previsões
-│
-│── models/                  # Modelos treinados (um por moeda)
-│
-│── run_all.py               # Orquestrador (executa ETL + treino + previsão + API + Dashboard)
-│── README.md                # Documentação do projeto
 
-⚙️ Requisitos
 
-Python 3.10+
+.
+├── etl/
+│ ├── extract.py # Coleta preços via CoinGecko e salva no SQLite
+│ ├── transform.py # Gera features e salva no Parquet
+├── model/
+│ ├── train.py # Treina modelos RandomForest
+│ ├── predict.py # Gera previsões e salva no Parquet
+├── api/
+│ └── main.py # API FastAPI com endpoints de previsão
+├── dashboard/
+│ └── app.py # Dashboard Streamlit
+├── data/
+│ ├── crypto.db # Banco SQLite (criado automaticamente)
+│ └── processed/ # Features e previsões em formato Parquet
+├── models/ # Modelos treinados (joblib)
+├── run_all.py # Orquestrador principal
+├── requirements.txt
+└── README.md
 
-Dependências:
+
+---
+
+## 📦 Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-repo/crypto-pipeline.git
+   cd crypto-pipeline
+
+
+Crie e ative um ambiente virtual:
+
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+
+
+Instale as dependências:
 
 pip install -r requirements.txt
 
+▶️ Execução
 
-Exemplo de requirements.txt:
-
-fastapi
-uvicorn
-pandas
-scikit-learn
-joblib
-plotly
-streamlit
-sqlalchemy
-requests
-python-multipart
-
-🚀 Como Rodar o Projeto
-1️⃣ Rodar tudo de uma vez (recomendado)
-
-O script run_all.py executa todo o pipeline automaticamente:
+Rodar tudo (pipeline + API + Dashboard):
 
 python run_all.py
 
 
-Isso vai:
+Processo 1 → extract.py coleta preços continuamente
 
-Coletar e atualizar preços (ETL)
+Processo 2 → pipeline transform → train → predict roda a cada 30s
 
-Processar features
+Processo 3 → API FastAPI (porta 8000)
 
-Treinar os modelos
+Processo 4 → Dashboard Streamlit (porta 8501)
 
-Gerar previsões
+Processo 5 → abre navegador automaticamente
 
-Subir a API (FastAPI) em http://127.0.0.1:8000
+Acessar:
 
-Subir o Dashboard (Streamlit) em http://127.0.0.1:8501
+API → http://127.0.0.1:8000/docs
 
-2️⃣ Executar manualmente (passo a passo)
+Dashboard → http://127.0.0.1:8501
 
-Se quiser rodar cada parte separadamente:
+📊 Funcionalidades
 
-🔹 Coletar dados (ETL – Extract)
-python etl/extract.py
+Coleta de dados em tempo real (CoinGecko API → SQLite).
 
+Geração de features (médias móveis, variação percentual).
 
-👉 Salva preços em tempo real no data/crypto.db.
+Treinamento de modelos Random Forest por moeda.
 
-🔹 Processar dados (ETL – Transform)
-python etl/transform.py
+Previsões automáticas a cada 30s, salvas em parquet.
 
+Dashboard interativo (Streamlit):
 
-👉 Gera features (médias móveis, variação percentual etc.) em data/processed/crypto_features.parquet.
+Histórico de preços
 
-🔹 Treinar modelos
-python model/train.py
+Previsões futuras
 
+Acurácia das previsões
 
-👉 Cria/atualiza modelos Random Forest para cada moeda em models/.
+Comparativo entre moedas
 
-🔹 Gerar previsões
-python model/predict.py
+API REST (FastAPI):
 
+/moedas → lista moedas disponíveis
 
-👉 Calcula a previsão para 1h à frente e salva no predictions_log.parquet.
+/prever/{moeda} → previsão mais recente
 
-🔹 Subir API
-uvicorn api.main:app --reload --port 8000
+/previsoes/{moeda} → histórico de previsões
 
+📌 Notas
 
-👉 Documentação Swagger: http://127.0.0.1:8000/docs
-👉 Documentação Redoc: http://127.0.0.1:8000/redoc
+O Dashboard atualiza automaticamente a cada 30s.
 
-🔹 Subir Dashboard
-streamlit run dashboard/app.py --server.port 8501
+A API sempre serve os arquivos mais recentes.
 
-
-👉 Acesse em: http://127.0.0.1:8501
-
-📡 API – Endpoints disponíveis
-🔹 Raiz
-GET /
-
-
-Retorna informações gerais da API.
-
-🔹 Status
-GET /status
-
-
-Retorna status atual da API.
-
-🔹 Listar moedas disponíveis
-GET /moedas
-
-🔹 Prever valor futuro
-GET /prever/{moeda}
-
-
-Exemplo:
-
-http://127.0.0.1:8000/prever/btc
-
-🔹 Histórico de previsões
-GET /previsoes/{moeda}
-
-
-Parâmetros opcionais:
-
-inicio: Data inicial (YYYY-MM-DDTHH:MM)
-
-fim: Data final (YYYY-MM-DDTHH:MM)
-
-exportar_csv: true para exportar CSV
-
-📊 Dashboard – Funcionalidades
-
-O Dashboard em Streamlit permite:
-
-📈 Visualizar histórico de preços
-
-🤖 Ver previsões de 1h à frente
-
-📉 Acompanhar evolução das previsões no tempo
-
-📊 Monitorar variação percentual dos preços
-
-🌍 Comparar diferentes moedas
-
-🎯 Ver acurácia das previsões (erro absoluto e percentual)
-
-📩 Exportar dados em CSV
-
-🔗 Botão para acessar API diretamente
-
-🔮 Modelagem (Machine Learning)
-
-Modelo: Random Forest Regressor
-
-Features utilizadas:
-
-price_usd – preço atual
-
-price_ma_3 – média móvel de 3 períodos
-
-price_ma_6 – média móvel de 6 períodos
-
-price_pct_change_1h – variação percentual em 1h
-
-Target: price_future_1h – preço real da próxima hora
-
-O modelo é re-treinado constantemente a cada ciclo do pipeline.
-
-📌 Exemplo de fluxo
-
-extract.py coleta preços atuais de BTC e ETH.
-
-transform.py calcula médias móveis e variação percentual.
-
-train.py treina um modelo Random Forest para cada moeda.
-
-predict.py prevê o preço 1h à frente e salva em log.
-
-O dashboard exibe preços reais, previsões e erros.
-
-A API permite consultar valores e previsões externamente.
-
-🧑‍💻 Autor
-
-Projeto desenvolvido como um sistema completo de previsão de criptomoedas com IA para aprendizado, integração de ETL, Machine Learning e visualização interativa.
+Se quiser mudar a frequência, altere INTERVAL no run_all.py.

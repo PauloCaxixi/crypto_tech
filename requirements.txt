@@ -1,11 +1,22 @@
-fastapi
-uvicorn
-streamlit
-requests
+# Core
 pandas
 numpy
-scikit-learn
+requests
 joblib
+
+# Machine Learning
+scikit-learn
+
+# API
+fastapi
+uvicorn[standard]
+
+# Dashboard
+streamlit
 plotly
-pyarrow
-python-dateutil
+
+# Banco de dados
+sqlite-utils  # opcional, ajuda a inspecionar o SQLite
+
+# Extras
+pyarrow  # leitura/gravação parquet
