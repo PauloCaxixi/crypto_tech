@@ -7,74 +7,62 @@ import multiprocessing
 import webbrowser
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+DASHBOARD = PROJECT_ROOT / "dashboard" / "app.py"
 PY = sys.executable
-INTERVAL = 30  # segundos
+
+INTERVAL = 30  # segundos entre ciclos do ETL
 API_URL = "http://127.0.0.1:8000/docs"
 DASHBOARD_URL = "http://127.0.0.1:8501"
 
-def run(cmd):
-    """Executa comando no terminal"""
-    print(f"\n$ {cmd}")
-    return subprocess.call(cmd, shell=True)
+def run(cmd, cwd=None):
+    """Executa comando em subprocess não-bloqueante"""
+    print(f"\n$ {' '.join(cmd)} (cwd={cwd or os.getcwd()})")
+    return subprocess.Popen(cmd, cwd=cwd, shell=False)
 
-# ---------- Processos ----------
-def start_extractor():
-    """Roda o coletor contínuo de preços (CoinGecko → SQLite)"""
-    run(f"{PY} etl/extract.py")
-
-def pipeline_loop():
-    """Loop contínuo de transform → train → predict"""
+def etl_loop():
     while True:
-        try:
-            run(f"{PY} etl/transform.py")
-            run(f"{PY} model/train.py")
-            run(f"{PY} model/predict.py")
-            print(f"✅ Ciclo concluído — aguardando {INTERVAL}s...\n")
-        except Exception as e:
-            print(f"❌ Erro no ciclo: {e}")
+        subprocess.call([PY, "etl/extract.py", "--once"])
+        subprocess.call([PY, "etl/transform.py"])
+        subprocess.call([PY, "model/train.py"])
+        subprocess.call([PY, "model/predict.py"])
+        print(f"✅ Ciclo ETL concluído — aguardando {INTERVAL}s...\n")
         time.sleep(INTERVAL)
 
 def start_api():
-    """Sobe API FastAPI"""
-    run(f"{PY} -m uvicorn api.main:app --reload")
+    run([PY, "-m", "uvicorn", "api.main:app", "--host", "127.0.0.1", "--port", "8000"], cwd=str(PROJECT_ROOT))
 
 def start_dashboard():
-    """Sobe Dashboard Streamlit"""
-    run(f"{PY} -m streamlit run dashboard/app.py")
+    run([
+        PY, "-m", "streamlit", "run", str(DASHBOARD),
+        "--server.port", "8501",
+        "--server.headless", "true",
+        "--browser.gatherUsageStats", "false"
+    ], cwd=str(PROJECT_ROOT))
 
 def open_browser():
-    """Abre API e Dashboard no navegador"""
+    time.sleep(8)  # espera API e Dashboard subirem
     webbrowser.open_new_tab(DASHBOARD_URL)
-    time.sleep(5)  # espera serviços subirem
     webbrowser.open_new_tab(API_URL)
 
-
-# ---------- Orquestrador ----------
 def main():
-    # garante pastas necessárias
     Path("data/processed").mkdir(parents=True, exist_ok=True)
     Path("models").mkdir(parents=True, exist_ok=True)
 
-    # cria processos independentes
-    p1 = multiprocessing.Process(target=start_extractor)
-    p2 = multiprocessing.Process(target=pipeline_loop)
-    p3 = multiprocessing.Process(target=start_api)
-    p4 = multiprocessing.Process(target=start_dashboard)
-    p5 = multiprocessing.Process(target=open_browser)
+    p1 = multiprocessing.Process(target=etl_loop)
+    p2 = multiprocessing.Process(target=start_api)
+    p3 = multiprocessing.Process(target=start_dashboard)
+    p4 = multiprocessing.Process(target=open_browser)
 
-    # inicia todos
     p1.start()
     p2.start()
     p3.start()
     p4.start()
-    p5.start()
 
-    # mantém vivos
     p1.join()
     p2.join()
     p3.join()
     p4.join()
-    p5.join()
 
 if __name__ == "__main__":
     main()
