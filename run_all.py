@@ -36,14 +36,15 @@ def pipeline_loop():
 
 def start_api():
     """Sobe API FastAPI"""
-    run(f"{PY} -m uvicorn api.main:app --reload --port 8000")
+    run(f"{PY} -m uvicorn api.main:app --reload")
 
 def start_dashboard():
     """Sobe Dashboard Streamlit"""
-    run(f"{PY} -m streamlit run dashboard/app.py --server.port 8501")
+    run(f"{PY} -m streamlit run dashboard/app.py")
 
 def open_browser():
     """Abre API e Dashboard no navegador"""
+    webbrowser.open_new_tab(DASHBOARD_URL)
     time.sleep(5)  # espera serviços subirem
     webbrowser.open_new_tab(API_URL)
 
