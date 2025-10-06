@@ -1,29 +1,31 @@
-# ==== CORE DATA & ML ====
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.5.2
-joblib==1.4.2
-pyarrow==17.0.0
-fastparquet==2024.5.0
+# ==============================
+# 📦 Dependências Principais
+# ==============================
 
-# ==== API (FastAPI + Uvicorn) ====
-fastapi==0.115.0
-uvicorn==0.30.6
-pydantic==2.9.2
+# Web API
+fastapi
+uvicorn
 
-# ==== DASHBOARD (Streamlit + Plotly) ====
-streamlit==1.39.0
-plotly==5.24.1
-streamlit-autorefresh
+# Dashboard e Visualização
+streamlit
+streamlit_autorefresh
+plotly
 
-# ==== UTILITÁRIOS ====
-requests==2.32.3
-python-dateutil==2.9.0.post0
-tzdata==2024.2
+# Machine Learning e Data Science
+pandas
+numpy
+scikit-learn
+joblib
+pyarrow
+requests
 
-# ==== SEGURANÇA / CORS ====
-starlette==0.38.5
-aiofiles==23.2.1
+# ==============================
+# ⚙ Utilitários e Suporte
+# ==============================
 
-# ==== LOGGING E SUPORTE ====
-colorama==0.4.6
+# Para manipulação de datas e timezones (usado no dashboard e API)
+python-dateutil
+pytz
+
+# Para logs e organização de arquivos
+pathlib

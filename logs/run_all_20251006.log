@@ -5253,3 +5253,462 @@
    Modelo salvo em models//sol_model.joblib
 [2025-10-06 13:10:28] ✅ Train concluído com sucesso.
 [2025-10-06 13:10:28] ➡️  Predict: C:\Users\web.atendimento\AppData\Local\Programs\Python\Python313\python.exe C:\Users\web.atendimento\crypto_tech\model\predict.py
+
+
+=== Início da execução: 2025-10-06 18:39:53 ===
+[2025-10-06 18:39:53] 🧠 Orquestrador iniciado.
+[2025-10-06 18:39:53] 🌐 Iniciando API (Uvicorn)...
+[2025-10-06 18:39:53] 📊 Iniciando Dashboard (Streamlit)...
+[2025-10-06 18:39:53] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:39:53] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:39:54.150955] Iniciando extração única...
+   [2025-10-06 18:39:54.687728] Dados salvos com sucesso.
+[2025-10-06 18:39:54] ✅ Extract concluído com sucesso.
+[2025-10-06 18:39:54] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:39:59.355658] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3432
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 16:10:23+00:00
+[2025-10-06 18:39:59] ✅ Transform concluído com sucesso.
+[2025-10-06 18:39:59] 📦 Features atualizadas: 2025-10-06 18:39:59
+[2025-10-06 18:39:59] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
+[2025-10-06 18:40:01] 🌍 Abrindo navegador (Dashboard + API)...
+   
+   [2025-10-06 18:40:12.548485] Iniciando treinamento...
+   Total de registros no dataset: 3432
+   Moedas disponíveis: ['btc', 'ada', 'eth', 'ltc', 'xrp', 'sol']
+   
+   [2025-10-06 18:40:12.842934] Modelo treinado para BTC
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 208.6633
+   R2 : -0.0843
+   Modelo salvo em models//btc_model.joblib
+   
+   [2025-10-06 18:40:13.157085] Modelo treinado para ADA
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 0.0049
+   R2 : -0.3127
+   Modelo salvo em models//ada_model.joblib
+   
+   [2025-10-06 18:40:13.441397] Modelo treinado para ETH
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 36.6171
+   R2 : -1.4620
+   Modelo salvo em models//eth_model.joblib
+   
+   [2025-10-06 18:40:13.715039] Modelo treinado para LTC
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 0.0863
+   R2 : 0.5981
+   Modelo salvo em models//ltc_model.joblib
+   
+   [2025-10-06 18:40:14.029948] Modelo treinado para XRP
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 0.0104
+   R2 : -0.7419
+   Modelo salvo em models//xrp_model.joblib
+   
+   [2025-10-06 18:40:14.300946] Modelo treinado para SOL
+   Registros totais usados: 572
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 16:10:23+00:00
+   MAE: 0.6183
+   R2 : -0.3415
+   Modelo salvo em models//sol_model.joblib
+[2025-10-06 18:40:14] ✅ Train concluído com sucesso.
+[2025-10-06 18:40:14] ➡️  Predict: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\predict.py
+   [2025-10-06 18:40:16] Previsão registrada para BTC:
+      Preço atual = 124941.00
+      Previsão para 06/10 14:10 = 124830.38
+   
+   [2025-10-06 18:40:16] Previsão registrada para ADA:
+      Preço atual = 0.87
+      Previsão para 06/10 14:10 = 0.86
+   
+   [2025-10-06 18:40:16] Previsão registrada para ETH:
+      Preço atual = 4669.33
+      Previsão para 06/10 14:10 = 4598.51
+   
+   [2025-10-06 18:40:17] Previsão registrada para LTC:
+      Preço atual = 120.04
+      Previsão para 06/10 14:10 = 120.22
+   
+   [2025-10-06 18:40:17] Previsão registrada para XRP:
+      Preço atual = 3.03
+      Previsão para 06/10 14:10 = 3.00
+   
+   [2025-10-06 18:40:17] Previsão registrada para SOL:
+      Preço atual = 235.55
+      Previsão para 06/10 14:10 = 234.21
+   
+[2025-10-06 18:40:17] ✅ Predict concluído com sucesso.
+[2025-10-06 18:40:17] 📝 Log de previsões atualizado: 2025-10-06 18:40:17
+[2025-10-06 18:40:17] ✅ Ciclo ETL concluído. Próxima execução em 30s...
+
+[2025-10-06 18:40:47] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:40:47] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:40:47.728637] Iniciando extração única...
+   [2025-10-06 18:40:48.051700] Dados salvos com sucesso.
+[2025-10-06 18:40:48] ✅ Extract concluído com sucesso.
+[2025-10-06 18:40:48] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:40:48.911916] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3438
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 21:39:54+00:00
+[2025-10-06 18:40:49] ✅ Transform concluído com sucesso.
+[2025-10-06 18:40:49] 📦 Features atualizadas: 2025-10-06 18:40:48
+[2025-10-06 18:40:49] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
+   
+   [2025-10-06 18:40:50.930429] Iniciando treinamento...
+   Total de registros no dataset: 3438
+   Moedas disponíveis: ['btc', 'ada', 'eth', 'ltc', 'xrp', 'sol']
+   
+   [2025-10-06 18:40:51.138695] Modelo treinado para BTC
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 201.4127
+   R2 : -0.0112
+   Modelo salvo em models//btc_model.joblib
+   
+   [2025-10-06 18:40:51.412229] Modelo treinado para ADA
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 0.0050
+   R2 : -0.3339
+   Modelo salvo em models//ada_model.joblib
+   
+   [2025-10-06 18:40:51.651313] Modelo treinado para ETH
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 37.1435
+   R2 : -1.4764
+   Modelo salvo em models//eth_model.joblib
+   
+   [2025-10-06 18:40:51.889711] Modelo treinado para LTC
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 0.0856
+   R2 : 0.6661
+   Modelo salvo em models//ltc_model.joblib
+   
+   [2025-10-06 18:40:52.189681] Modelo treinado para XRP
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 0.0105
+   R2 : -0.7592
+   Modelo salvo em models//xrp_model.joblib
+   
+   [2025-10-06 18:40:52.382803] Modelo treinado para SOL
+   Registros totais usados: 573
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:39:54+00:00
+   MAE: 0.6166
+   R2 : -0.3024
+   Modelo salvo em models//sol_model.joblib
+[2025-10-06 18:40:52] ✅ Train concluído com sucesso.
+[2025-10-06 18:40:52] ➡️  Predict: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\predict.py
+   [2025-10-06 18:40:54] Previsão registrada para BTC:
+      Preço atual = 124975.00
+      Previsão para 06/10 19:39 = 124846.74
+   
+   [2025-10-06 18:40:54] Previsão registrada para ADA:
+      Preço atual = 0.87
+      Previsão para 06/10 19:39 = 0.86
+   
+   [2025-10-06 18:40:54] Previsão registrada para ETH:
+      Preço atual = 4687.22
+      Previsão para 06/10 19:39 = 4596.35
+   
+   [2025-10-06 18:40:54] Previsão registrada para LTC:
+      Preço atual = 119.15
+      Previsão para 06/10 19:39 = 119.22
+   
+   [2025-10-06 18:40:55] Previsão registrada para XRP:
+      Preço atual = 3.01
+      Previsão para 06/10 19:39 = 3.00
+   
+   [2025-10-06 18:40:55] Previsão registrada para SOL:
+      Preço atual = 233.55
+      Previsão para 06/10 19:39 = 234.12
+   
+[2025-10-06 18:40:55] ✅ Predict concluído com sucesso.
+[2025-10-06 18:40:55] 📝 Log de previsões atualizado: 2025-10-06 18:40:55
+[2025-10-06 18:40:55] ✅ Ciclo ETL concluído. Próxima execução em 30s...
+
+[2025-10-06 18:41:25] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:41:25] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:41:25.705455] Iniciando extração única...
+   [2025-10-06 18:41:26.195702] Dados salvos com sucesso.
+[2025-10-06 18:41:26] ✅ Extract concluído com sucesso.
+[2025-10-06 18:41:26] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:41:26.861426] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3444
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 21:40:48+00:00
+[2025-10-06 18:41:26] ✅ Transform concluído com sucesso.
+[2025-10-06 18:41:26] 📦 Features atualizadas: 2025-10-06 18:41:26
+[2025-10-06 18:41:26] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
+   
+   [2025-10-06 18:41:28.544174] Iniciando treinamento...
+   Total de registros no dataset: 3444
+   Moedas disponíveis: ['btc', 'ada', 'eth', 'ltc', 'xrp', 'sol']
+   
+   [2025-10-06 18:41:28.713981] Modelo treinado para BTC
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 191.1064
+   R2 : 0.0871
+   Modelo salvo em models//btc_model.joblib
+   
+   [2025-10-06 18:41:28.911146] Modelo treinado para ADA
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 0.0052
+   R2 : -0.3547
+   Modelo salvo em models//ada_model.joblib
+   
+   [2025-10-06 18:41:29.104929] Modelo treinado para ETH
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 37.5677
+   R2 : -1.4839
+   Modelo salvo em models//eth_model.joblib
+   
+   [2025-10-06 18:41:29.305176] Modelo treinado para LTC
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 0.0887
+   R2 : 0.6971
+   Modelo salvo em models//ltc_model.joblib
+   
+   [2025-10-06 18:41:29.496444] Modelo treinado para XRP
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 0.0106
+   R2 : -0.7770
+   Modelo salvo em models//xrp_model.joblib
+   
+   [2025-10-06 18:41:29.707653] Modelo treinado para SOL
+   Registros totais usados: 574
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:40:48+00:00
+   MAE: 0.6025
+   R2 : -0.2258
+   Modelo salvo em models//sol_model.joblib
+[2025-10-06 18:41:29] ✅ Train concluído com sucesso.
+[2025-10-06 18:41:29] ➡️  Predict: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\predict.py
+   [2025-10-06 18:41:31] Previsão registrada para BTC:
+      Preço atual = 124975.00
+      Previsão para 06/10 19:40 = 124864.26
+   
+   [2025-10-06 18:41:31] Previsão registrada para ADA:
+      Preço atual = 0.87
+      Previsão para 06/10 19:40 = 0.86
+   
+   [2025-10-06 18:41:31] Previsão registrada para ETH:
+      Preço atual = 4687.22
+      Previsão para 06/10 19:40 = 4599.25
+   
+   [2025-10-06 18:41:31] Previsão registrada para LTC:
+      Preço atual = 119.15
+      Previsão para 06/10 19:40 = 119.19
+   
+   [2025-10-06 18:41:32] Previsão registrada para XRP:
+      Preço atual = 3.01
+      Previsão para 06/10 19:40 = 3.00
+   
+   [2025-10-06 18:41:32] Previsão registrada para SOL:
+      Preço atual = 233.55
+      Previsão para 06/10 19:40 = 234.14
+   
+[2025-10-06 18:41:32] ✅ Predict concluído com sucesso.
+[2025-10-06 18:41:32] 📝 Log de previsões atualizado: 2025-10-06 18:41:32
+[2025-10-06 18:41:32] ✅ Ciclo ETL concluído. Próxima execução em 30s...
+
+[2025-10-06 18:42:02] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:42:02] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:42:02.619513] Iniciando extração única...
+   [2025-10-06 18:42:02.973153] Dados salvos com sucesso.
+[2025-10-06 18:42:02] ✅ Extract concluído com sucesso.
+[2025-10-06 18:42:02] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:42:03.671272] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3450
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 21:41:26+00:00
+[2025-10-06 18:42:03] ✅ Transform concluído com sucesso.
+[2025-10-06 18:42:03] 📦 Features atualizadas: 2025-10-06 18:42:03
+[2025-10-06 18:42:03] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
+   
+   [2025-10-06 18:42:05.362134] Iniciando treinamento...
+   Total de registros no dataset: 3450
+   Moedas disponíveis: ['btc', 'ada', 'eth', 'ltc', 'xrp', 'sol']
+   
+   [2025-10-06 18:42:05.546645] Modelo treinado para BTC
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 187.2728
+   R2 : 0.1257
+   Modelo salvo em models//btc_model.joblib
+   
+   [2025-10-06 18:42:05.747756] Modelo treinado para ADA
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 0.0053
+   R2 : -0.3762
+   Modelo salvo em models//ada_model.joblib
+   
+   [2025-10-06 18:42:05.962697] Modelo treinado para ETH
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 38.1634
+   R2 : -1.5104
+   Modelo salvo em models//eth_model.joblib
+   
+   [2025-10-06 18:42:06.172811] Modelo treinado para LTC
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 0.0882
+   R2 : 0.7313
+   Modelo salvo em models//ltc_model.joblib
+   
+   [2025-10-06 18:42:06.358135] Modelo treinado para XRP
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 0.0107
+   R2 : -0.7952
+   Modelo salvo em models//xrp_model.joblib
+   
+   [2025-10-06 18:42:06.540420] Modelo treinado para SOL
+   Registros totais usados: 575
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:41:26+00:00
+   MAE: 0.5988
+   R2 : -0.1842
+   Modelo salvo em models//sol_model.joblib
+[2025-10-06 18:42:06] ✅ Train concluído com sucesso.
+[2025-10-06 18:42:06] ➡️  Predict: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\predict.py
+   [2025-10-06 18:42:08] Previsão registrada para BTC:
+      Preço atual = 124956.00
+      Previsão para 06/10 19:41 = 124870.96
+   
+   [2025-10-06 18:42:08] Previsão registrada para ADA:
+      Preço atual = 0.87
+      Previsão para 06/10 19:41 = 0.86
+   
+   [2025-10-06 18:42:08] Previsão registrada para ETH:
+      Preço atual = 4685.77
+      Previsão para 06/10 19:41 = 4599.42
+   
+   [2025-10-06 18:42:08] Previsão registrada para LTC:
+      Preço atual = 119.23
+      Previsão para 06/10 19:41 = 119.19
+   
+   [2025-10-06 18:42:08] Previsão registrada para XRP:
+      Preço atual = 3.01
+      Previsão para 06/10 19:41 = 3.00
+   
+   [2025-10-06 18:42:08] Previsão registrada para SOL:
+      Preço atual = 233.55
+      Previsão para 06/10 19:41 = 233.99
+   
+[2025-10-06 18:42:09] ✅ Predict concluído com sucesso.
+[2025-10-06 18:42:09] 📝 Log de previsões atualizado: 2025-10-06 18:42:08
+[2025-10-06 18:42:09] ✅ Ciclo ETL concluído. Próxima execução em 30s...
+
+[2025-10-06 18:42:39] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:42:39] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:42:39.382191] Iniciando extração única...
+   [2025-10-06 18:42:40.238650] Dados salvos com sucesso.
+[2025-10-06 18:42:40] ✅ Extract concluído com sucesso.
+[2025-10-06 18:42:40] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:42:40.892238] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3456
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 21:42:02+00:00
+[2025-10-06 18:42:40] ✅ Transform concluído com sucesso.
+[2025-10-06 18:42:40] 📦 Features atualizadas: 2025-10-06 18:42:40
+[2025-10-06 18:42:40] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
+   
+   [2025-10-06 18:42:42.547885] Iniciando treinamento...
+   Total de registros no dataset: 3456
+   Moedas disponíveis: ['btc', 'ada', 'eth', 'ltc', 'xrp', 'sol']
+   
+   [2025-10-06 18:42:42.728890] Modelo treinado para BTC
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 186.3743
+   R2 : 0.1248
+   Modelo salvo em models//btc_model.joblib
+   
+   [2025-10-06 18:42:42.929567] Modelo treinado para ADA
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 0.0054
+   R2 : -0.3894
+   Modelo salvo em models//ada_model.joblib
+   
+   [2025-10-06 18:42:43.128719] Modelo treinado para ETH
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 38.5728
+   R2 : -1.5221
+   Modelo salvo em models//eth_model.joblib
+   
+   [2025-10-06 18:42:43.329650] Modelo treinado para LTC
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 0.0880
+   R2 : 0.7570
+   Modelo salvo em models//ltc_model.joblib
+   
+   [2025-10-06 18:42:43.522380] Modelo treinado para XRP
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 0.0106
+   R2 : -0.7830
+   Modelo salvo em models//xrp_model.joblib
+   
+   [2025-10-06 18:42:43.724910] Modelo treinado para SOL
+   Registros totais usados: 576
+   Período: 2025-10-01 00:11:50+00:00 - 2025-10-06 21:42:02+00:00
+   MAE: 0.5971
+   R2 : -0.1670
+   Modelo salvo em models//sol_model.joblib
+[2025-10-06 18:42:43] ✅ Train concluído com sucesso.
+[2025-10-06 18:42:43] ➡️  Predict: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\predict.py
+   [2025-10-06 18:42:45] Previsão registrada para BTC:
+      Preço atual = 124956.00
+      Previsão para 06/10 19:42 = 124871.96
+   
+   [2025-10-06 18:42:45] Previsão registrada para ADA:
+      Preço atual = 0.87
+      Previsão para 06/10 19:42 = 0.86
+   
+   [2025-10-06 18:42:45] Previsão registrada para ETH:
+      Preço atual = 4685.77
+      Previsão para 06/10 19:42 = 4599.42
+   
+   [2025-10-06 18:42:45] Previsão registrada para LTC:
+      Preço atual = 119.23
+      Previsão para 06/10 19:42 = 119.16
+   
+   [2025-10-06 18:42:46] Previsão registrada para XRP:
+      Preço atual = 3.01
+      Previsão para 06/10 19:42 = 3.00
+   
+   [2025-10-06 18:42:46] Previsão registrada para SOL:
+      Preço atual = 233.55
+      Previsão para 06/10 19:42 = 233.99
+   
+[2025-10-06 18:42:46] ✅ Predict concluído com sucesso.
+[2025-10-06 18:42:46] 📝 Log de previsões atualizado: 2025-10-06 18:42:46
+[2025-10-06 18:42:46] ✅ Ciclo ETL concluído. Próxima execução em 30s...
+
+[2025-10-06 18:43:16] 🚀 Iniciando ciclo ETL (Extract → Transform → Train → Predict)...
+[2025-10-06 18:43:16] ➡️  Extract: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\extract.py
+   [2025-10-06 18:43:16.546983] Iniciando extração única...
+   [2025-10-06 18:43:16.864325] Dados salvos com sucesso.
+[2025-10-06 18:43:16] ✅ Extract concluído com sucesso.
+[2025-10-06 18:43:16] ➡️  Transform: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\etl\transform.py
+   [2025-10-06 18:43:17.577961] Features salvas com sucesso em: data/processed/crypto_features.parquet
+   Total de registros: 3462
+   Primeira data: 2025-10-01 00:11:50+00:00 | Última data: 2025-10-06 21:42:40+00:00
+[2025-10-06 18:43:17] ✅ Transform concluído com sucesso.
+[2025-10-06 18:43:17] 📦 Features atualizadas: 2025-10-06 18:43:17
+[2025-10-06 18:43:17] ➡️  Train: D:\PosTech\Fase 3\Paulo\crypto_tech\venv\Scripts\python.exe D:\PosTech\Fase 3\Paulo\crypto_tech\model\train.py
