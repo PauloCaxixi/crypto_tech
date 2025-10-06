@@ -1,22 +1,28 @@
-# Core
-pandas
-numpy
-requests
-joblib
+# ==== CORE DATA & ML ====
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.2
+joblib==1.4.2
+pyarrow==17.0.0
+fastparquet==2024.5.0
 
-# Machine Learning
-scikit-learn
+# ==== API (FastAPI + Uvicorn) ====
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
 
-# API
-fastapi
-uvicorn[standard]
+# ==== DASHBOARD (Streamlit + Plotly) ====
+streamlit==1.39.0
+plotly==5.24.1
 
-# Dashboard
-streamlit
-plotly
+# ==== UTILITÁRIOS ====
+requests==2.32.3
+python-dateutil==2.9.0.post0
+tzdata==2024.2
 
-# Banco de dados
-sqlite-utils  # opcional, ajuda a inspecionar o SQLite
+# ==== SEGURANÇA / CORS ====
+starlette==0.38.5
+aiofiles==23.2.1
 
-# Extras
-pyarrow  # leitura/gravação parquet
+# ==== LOGGING E SUPORTE ====
+colorama==0.4.6

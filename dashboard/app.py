@@ -4,6 +4,7 @@ import joblib
 import os
 import webbrowser
 from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 import plotly.graph_objects as go
 
 # --------- Config ---------
@@ -12,7 +13,7 @@ FEATURE_PATH = "data/processed/crypto_features.parquet"
 MODEL_DIR = "models/"
 PRED_LOG_PATH = "data/processed/predictions_log.parquet"
 API_URL = "http://127.0.0.1:8000/docs"
-AUTO_REFRESH_SEC = 30  # recarregar página a cada N segundos
+AUTO_REFRESH_SEC = 35  # recarregar página a cada N segundos
 
 # --------- Helpers ---------
 def _tz_saopaulo(series):
@@ -63,7 +64,7 @@ def load_predictions():
 
 # --------- UI Base ---------
 st.set_page_config(page_title="Crypto IA Dashboard", layout="wide", page_icon="📊")
-st.markdown(f"<meta http-equiv='refresh' content='{AUTO_REFRESH_SEC}'>", unsafe_allow_html=True)
+st_autorefresh(interval=AUTO_REFRESH_SEC * 1000, key="refresh")
 
 st.markdown("""
     <style>

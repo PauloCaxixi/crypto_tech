@@ -1,9 +1,7 @@
 import requests
 import sqlite3
-import time
 from datetime import datetime
 
-# Lista de criptomoedas e seus símbolos na API CoinGecko
 CRYPTOCURRENCIES = {
     "bitcoin": "btc",
     "ethereum": "eth",
@@ -14,7 +12,6 @@ CRYPTOCURRENCIES = {
 }
 
 DB_PATH = "data/crypto.db"
-SLEEP_TIME = 30  # segundos entre atualizações
 
 def create_table():
     conn = sqlite3.connect(DB_PATH)
@@ -62,15 +59,13 @@ def save_to_db(data):
     conn.commit()
     conn.close()
 
-def run():
-    print(f"[{datetime.now()}] Iniciando extração contínua...")
+def run_once():
+    print(f"[{datetime.now()}] Iniciando extração única...")
     create_table()
-    while True:
-        data = fetch_prices()
-        if data:
-            save_to_db(data)
-            print(f"[{datetime.now()}] Dados salvos com sucesso.")
-        time.sleep(SLEEP_TIME)
+    data = fetch_prices()
+    if data:
+        save_to_db(data)
+        print(f"[{datetime.now()}] Dados salvos com sucesso.")
 
 if __name__ == "__main__":
-    run()
+    run_once()

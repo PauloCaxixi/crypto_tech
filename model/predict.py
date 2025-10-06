@@ -1,3 +1,4 @@
+# === model/predict.py ===
 import pandas as pd
 import joblib
 import os
@@ -10,30 +11,29 @@ PRED_LOG_PATH = "data/processed/predictions_log.parquet"
 
 FEATURES = ["price_usd", "price_ma_3", "price_ma_6", "price_pct_change_1h"]
 
+
 def predict(symbol: str):
     if not os.path.exists(FEATURE_PATH):
-        print("⚠️ Nenhum dado processado encontrado.")
+        print("Aviso: Nenhum dado processado encontrado.")
         return None
 
     df = pd.read_parquet(FEATURE_PATH)
-
-    # garante timezone correto
     df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True, errors="coerce").dt.tz_convert("America/Sao_Paulo")
 
     if symbol not in df["symbol"].unique():
-        print(f"⚠️ Moeda {symbol.upper()} não encontrada nos dados.")
+        print(f"Aviso: Moeda {symbol.upper()} não encontrada nos dados.")
         return None
 
     model_path = os.path.join(MODEL_DIR, f"{symbol}_model.joblib")
     if not os.path.exists(model_path):
-        print(f"⚠️ Nenhum modelo treinado encontrado para {symbol.upper()}.")
+        print(f"Aviso: Nenhum modelo treinado encontrado para {symbol.upper()}.")
         return None
 
     modelo = joblib.load(model_path)
     mais_recente = df[df["symbol"] == symbol].sort_values("timestamp").iloc[-1]
 
-    # prepara features
-    features_df = pd.DataFrame([[
+    # Prepara features
+    features_df = pd.DataFrame([[ 
         mais_recente["price_usd"],
         mais_recente["price_ma_3"],
         mais_recente["price_ma_6"],
@@ -52,24 +52,19 @@ def predict(symbol: str):
 
     novo = pd.DataFrame([registro])
 
-    # Se já existe log, verifica se previsão desse horário já está salva
+    # Atualiza log de previsões
     if os.path.exists(PRED_LOG_PATH):
         antigo = pd.read_parquet(PRED_LOG_PATH)
-
-        # remove duplicatas com base em horário e moeda
         combinado = pd.concat([antigo, novo], ignore_index=True)
         combinado = combinado.drop_duplicates(subset=["horario", "moeda"], keep="last")
     else:
         combinado = novo
 
-    # limpeza final
     combinado = combinado.replace([np.inf, -np.inf], np.nan).dropna()
-
-    # salva atualizado
     combinado.to_parquet(PRED_LOG_PATH, index=False)
 
-    # log terminal
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] ✅ Previsão registrada para {symbol.upper()}:")
+    # Log seguro para Windows
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Previsão registrada para {symbol.upper()}:")
     print(f"   Preço atual = {mais_recente['price_usd']:.2f}")
     print(f"   Previsão para {ts_futuro.strftime('%d/%m %H:%M')} = {previsao:.2f}\n")
 
@@ -77,14 +72,17 @@ def predict(symbol: str):
 
 
 def run_all():
-    """Roda previsões para todas as moedas disponíveis no dataset"""
+    """Executa previsões para todas as moedas disponíveis."""
     if not os.path.exists(FEATURE_PATH):
-        print("⚠️ Nenhum dado processado encontrado.")
+        print("Aviso: Nenhum dado processado encontrado.")
         return
 
     df = pd.read_parquet(FEATURE_PATH)
     for symbol in df["symbol"].unique():
-        predict(symbol)
+        try:
+            predict(symbol)
+        except Exception as e:
+            print(f"Erro ao prever {symbol.upper()}: {e}")
 
 
 if __name__ == "__main__":

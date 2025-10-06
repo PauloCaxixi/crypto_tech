@@ -1,3 +1,4 @@
+# === api/main.py (com validação do arquivo Parquet) ===
 from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
@@ -18,7 +19,6 @@ DASHBOARD_URL = "http://127.0.0.1:8501"
 
 app = FastAPI(title="API de Previsão de Criptomoedas")
 
-# CORS para permitir acesso de outros domínios
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,14 +37,12 @@ def raiz():
         "moedas_disponiveis": "/moedas",
         "prever_valor": "/prever/{moeda}",
         "previsoes_registradas": "/previsoes/{moeda}",
-        "dashboard": DASHBOARD_URL  # 🔗 link do Streamlit
+        "dashboard": DASHBOARD_URL
     }
 
-# Custom Swagger UI com botão para dashboard
 @app.get("/docs", include_in_schema=False)
 def custom_swagger_ui():
     html = get_swagger_ui_html(openapi_url="/openapi.json", title="API de Previsão de Criptomoedas")
-    # insere botão no final
     extra_button = f"""
     <div style='margin:20px;'>
         <a href="{DASHBOARD_URL}" target="_blank">
@@ -56,7 +54,6 @@ def custom_swagger_ui():
     """
     return HTMLResponse(html.body.decode("utf-8") + extra_button)
 
-# Custom Redoc com botão para dashboard
 @app.get("/redoc", include_in_schema=False)
 def redoc_docs():
     html = get_redoc_html(openapi_url="/openapi.json", title="API de Previsão de Criptomoedas")
@@ -74,12 +71,11 @@ def redoc_docs():
 # ------------------- FUNÇÕES DE DADOS -------------------
 
 def carregar_dados():
-    if not os.path.exists(FEATURE_PATH):
-        return pd.DataFrame()
+    if not os.path.exists(FEATURE_PATH) or os.path.getsize(FEATURE_PATH) == 0:
+        raise HTTPException(status_code=500, detail="Arquivo de features não existe ou está vazio.")
 
     df = pd.read_parquet(FEATURE_PATH)
 
-    # ✅ Ajuste para não duplicar timezone
     if df['timestamp'].dt.tz is None:
         df['timestamp'] = df['timestamp'].dt.tz_localize("UTC").dt.tz_convert("America/Sao_Paulo")
     else:
@@ -88,8 +84,11 @@ def carregar_dados():
     return df
 
 def moedas_disponiveis():
-    df = carregar_dados()
-    return sorted(df['symbol'].unique().tolist()) if not df.empty else []
+    try:
+        df = carregar_dados()
+        return sorted(df['symbol'].unique().tolist()) if not df.empty else []
+    except:
+        return []
 
 @app.get("/status")
 def status():
@@ -100,9 +99,7 @@ def listar_moedas():
     return moedas_disponiveis()
 
 @app.get("/prever/{moeda}")
-def prever_valor_futuro(
-    moeda: str = Path(..., description="Escolha uma das moedas disponíveis", examples={"btc": {"summary": "Bitcoin"}}, enum=moedas_disponiveis())
-):
+def prever_valor_futuro(moeda: str = Path(..., description="Escolha uma das moedas disponíveis", examples={"btc": {"summary": "Bitcoin"}}, enum=moedas_disponiveis())):
     df = carregar_dados()
     if df.empty or moeda not in df['symbol'].unique():
         raise HTTPException(status_code=404, detail=f"Moeda '{moeda}' não encontrada ou dados insuficientes.")
@@ -147,11 +144,6 @@ def historico_previsoes(
     fim: str = Query(None, description="Data e hora final no formato YYYY-MM-DDTHH:MM"),
     exportar_csv: bool = Query(False, description="Se verdadeiro, retorna os dados como CSV")
 ):
-    """
-    Este endpoint realiza um GET no histórico de previsões dos valores das criptomoedas.
-    Ele retorna todos os registros de previsão feitos para a moeda informada,
-    com opção de filtrar por período e exportar CSV.
-    """
     if not os.path.exists(PRED_LOG_PATH):
         raise HTTPException(status_code=404, detail="Nenhum log de previsão encontrado.")
     df = pd.read_parquet(PRED_LOG_PATH)
