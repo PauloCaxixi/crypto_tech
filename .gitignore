@@ -1,0 +1,41 @@
+# ==========================================
+# 🧠 CRYPTO_TECH - Git Ignore
+# ==========================================
+
+# Ambientes virtuais
+venv/
+.env/
+env/
+ENV/
+.venv/
+.VENV/
+
+# Arquivos de cache e compilação
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+logs/
+*.log
+
+# Dados locais
+data/crypto.db
+data/processed/*.parquet
+
+# Modelos binários grandes
+models/*.joblib
+
+# Configs locais
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.bak
+*.tmp
+
+# Streamlit cache
+.streamlit/
+
+# Arquivos temporários do Windows / Mac
+desktop.ini
