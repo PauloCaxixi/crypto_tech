@@ -57,6 +57,9 @@ crypto_tech/
 │   ├── crypto.db         # Banco local SQLite
 │   └── processed/        # Features e previsões (arquivos Parquet)
 ├── models/               # Modelos salvos (.joblib)
+├── logs/                 # Logs de execução do orquestrador
+├── utils/                # Scripts auxiliares
+├── .gitignore            # Arquivos e pastas ignorados pelo Git
 ├── run_all.py            # Orquestrador do pipeline completo
 ├── requirements.txt
 └── README.md
@@ -185,11 +188,10 @@ A seção **“🛠️ Diagnóstico rápido”** exibe:
 ## 🔒 Boas Práticas e Manutenção
 
 * Execute o projeto sempre dentro de um **ambiente virtual**.
+
 * Mantenha as dependências atualizadas:
 
   ```bash
   pip install -U -r requirements.txt
   ```
-* Monitore o arquivo `logs/run_all_YYYYMMDD.log` para verificar erros ou atrasos no ETL.
-* Em caso de inconsistência nos dados, apague o arquivo `crypto_features.parquet` e deixe o ciclo regenerá-lo automaticamente.
 
